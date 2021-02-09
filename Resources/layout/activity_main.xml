@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFFFF">
+    
+    <TextView
+        android:text="Tap on image to rotate"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:id="@+id/textView2" />
+
+    <ImageView
+        android:src="@android:drawable/ic_menu_gallery"
+        android:layout_height="200dp"
+        android:id="@+id/imageView1"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/captureButton"
+        android:layout_toRightOf="@id/captureButton"
+        android:layout_below="@id/textView2"
+        android:layout_width="wrap_content"
+        android:clickable="true" />
+
+    <Button
+        android:text="Capture Image"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:id="@+id/captureButton"
+        android:layout_below="@id/textView2"
+        android:textColor="#fffff5f5"
+        android:background="#ff444444" />
+
+    <Button
+        android:text="Load Image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_below="@id/captureButton"
+        android:id="@+id/loadButton"
+        android:textColor="#fffff5f5"
+        android:background="#ff444444" />
+
+    <TextView
+        android:text=""
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/imageView1"
+        android:id="@+id/textView1"
+        android:background="#ff000000" />
+
+    <Button
+        android:text="Copy all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:id="@+id/selectAllButton"
+        android:layout_below="@id/textView1"
+        android:textColor="#fffff5f5"
+        android:background="#ff444444" />
+
+    <Button
+        android:text="Copy selected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:id="@+id/copyButton"
+        android:layout_below="@id/textView1"
+        android:layout_alignParentRight="true"
+        android:textColor="#fffff5f5"
+        android:background="#ff444444" />
+
+    <ListView
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/selectAllButton"
+        android:id="@+id/listRecogTxt"
+        android:clickable="true"
+        android:divider="#FF000000"
+        android:dividerHeight="4px"
+        android:layout_alignParentBottom="true" />
+
+    <TextView
+        android:text="Version: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/txtVersion"
+        android:layout_alignParentLeft="true" 
+         />
+    
+</RelativeLayout>
