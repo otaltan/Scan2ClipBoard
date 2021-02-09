@@ -1,4 +1,5 @@
-# Scan2ClipBoard
+# Scan2ClipBoard 
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate?hosted_button_id=WDU2SNRLKTEVJ)
 
 Scan2ClipBoard is an android app which recognizes characters from an image and stores them to the clipboard. 
 It uses Google's Optical Character Recognition (OCR) to extract the characters
