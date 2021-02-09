@@ -30,9 +30,11 @@ After that the application closes automatically.
    
 ### Example pictures of Scan2ClipBoard
 
-Recognized characters shown in list | Selected list entries
-:-------------------------:|:-------------------------:
-![](https://github.com/otaltan/Scan2ClipBoard/blob/master/Example%20Pictures/S2C_1.jpg?raw=true)  |  ![](https://github.com/otaltan/Scan2ClipBoard/blob/master/Example%20Pictures/S2C_2.jpg?raw=true)
+Recognized characters shown in list | Selected list entries | Detected characters from a rotated image
+--- | --- | ---
+<img src="https://github.com/otaltan/Scan2ClipBoard/blob/master/Example%20Pictures/S2C_1.jpg?raw=true" width="300" height="621"/> | <img src="https://github.com/otaltan/Scan2ClipBoard/blob/master/Example%20Pictures/S2C_2.jpg?raw=true" width="300" height="621"/> | <img src="https://github.com/otaltan/Scan2ClipBoard/blob/master/Example%20Pictures/S2C_3.jpg?raw=true" width="300" height="621"/>
+
+
 
 ## Compatibility & needed permissions
 
