@@ -11,10 +11,11 @@ using System.Collections.Generic;
 using Android.Gms.Vision;
 using Android.Gms.Vision.Texts;
 using Xamarin.Essentials;
+using Android.Content.PM;
 
 namespace Scan2ClipBoard
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : AppCompatActivity
     {
         ImageView imageView;
