@@ -24,11 +24,12 @@ namespace Scan2ClipBoard
         Button selectedButton;
         Button selectAllButton;
         Frame frame;
+        Bitmap bitmap;
         SparseArray items;
         ListView listnames;
         List<string> itemlist;
         List<string> selecteditems = new List<string>();
-        public StringBuilder search_string;
+        public StringBuilder selecteditem_string;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -41,6 +42,11 @@ namespace Scan2ClipBoard
             uploadButton = FindViewById<Button>(Resource.Id.loadButton);
             selectedButton = FindViewById<Button>(Resource.Id.copyButton);
             selectAllButton = FindViewById<Button>(Resource.Id.selectAllButton);
+            listnames = FindViewById<ListView>(Resource.Id.listRecogTxt);
+
+            // Select/deselect items from list
+            listnames.ItemClick += Listnames_ItemClick;
+            listnames.ChoiceMode = ChoiceMode.Multiple;
 
             // Get and Show App version number
             TextView currentVersion = FindViewById<TextView>(Resource.Id.txtVersion);
@@ -52,7 +58,11 @@ namespace Scan2ClipBoard
             uploadButton.Click += delegate { UploadPhoto(); };
             selectedButton.Click += delegate { CopySelected(); };
             selectAllButton.Click += delegate { CopyAll(); };
+
+            // Rotate Image and restart detecting characters
+            imageView.Click += delegate { RotateImage(); };
         }
+            
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
@@ -79,7 +89,7 @@ namespace Scan2ClipBoard
 
             // Convert file to byte array and set the resulting bitmap to imageview
             byte[] imageArray = System.IO.File.ReadAllBytes(file.Path);
-            Bitmap bitmap = BitmapFactory.DecodeByteArray(imageArray, 0, imageArray.Length);
+            bitmap = BitmapFactory.DecodeByteArray(imageArray, 0, imageArray.Length);
             imageView.SetImageBitmap(bitmap);
 
             // Detect characters of the image
@@ -90,6 +100,7 @@ namespace Scan2ClipBoard
         {
             await CrossMedia.Current.Initialize();
 
+            // Check if choosen file is a picture
             if (!CrossMedia.Current.IsPickPhotoSupported)
             {
                 Toast.MakeText(this, "Please choose a picture", ToastLength.Short).Show();
@@ -103,11 +114,34 @@ namespace Scan2ClipBoard
 
             // Convert file to byte array, to bitmap and set it to ImageView
             byte[] imageArray = System.IO.File.ReadAllBytes(file.Path);
-            Bitmap bitmap = BitmapFactory.DecodeByteArray(imageArray, 0, imageArray.Length);
+            bitmap = BitmapFactory.DecodeByteArray(imageArray, 0, imageArray.Length);
             imageView.SetImageBitmap(bitmap);
 
             // Detect characters of the image
             RecogText(bitmap);
+        }
+
+        private void RotateImage()
+        {
+            if (bitmap != null)
+            {
+                // Rotate Image by 90°
+                BitmapFactory.Options o2 = new BitmapFactory.Options();
+                o2.InSampleSize = 2;
+                Matrix matrix = new Matrix();
+                matrix.PostRotate(90);
+
+                // Here you will get the image bitmap which has changed orientation
+                bitmap = Bitmap.CreateBitmap(bitmap, 0, 0, bitmap.Width, bitmap.Height, matrix, true);
+                imageView.SetImageBitmap(bitmap);
+
+                // Detect characters of the image
+                RecogText(bitmap);
+            }
+            else
+            {
+                Toast.MakeText(this, "Take or choose picture first", ToastLength.Short).Show();
+            }
         }
 
         private void RecogText(Bitmap bitmap)
@@ -121,9 +155,11 @@ namespace Scan2ClipBoard
             else
             {
                 frame = new Frame.Builder().SetBitmap(bitmap).Build();
+                
+                // Detect characters 
                 items = txtRecognizer.Detect(frame);
                 
-                // Create item list
+                // Create list for detected characters
                 itemlist = new List<string>();
 
                 // Add items to list
@@ -140,59 +176,13 @@ namespace Scan2ClipBoard
                 }
 
                 // Fill the listView with the items of itemlist
-                listnames = FindViewById<ListView>(Resource.Id.listRecogTxt);
                 ArrayAdapter<string> adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItemActivated1, itemlist);
                 listnames.Adapter = adapter;
-                listnames.ChoiceMode = ChoiceMode.Multiple;
-                listnames.ItemClick += Listnames_ItemClick;
-
-                // Rotate Image and restart detecting characters
-                imageView.Click += delegate
-                {
-                    // Rotate Image by 90°
-                    BitmapFactory.Options o2 = new BitmapFactory.Options();
-                    o2.InSampleSize = 2;
-                    Matrix matrix = new Matrix();
-                    matrix.PostRotate(90);
-                    
-                    // Here you will get the image bitmap which has changed orientation
-                    bitmap = Bitmap.CreateBitmap(bitmap, 0, 0, bitmap.Width, bitmap.Height, matrix, true);
-                    imageView.SetImageBitmap(bitmap);
-
-                    frame = new Frame.Builder().SetBitmap(bitmap).Build();
-                    items = txtRecognizer.Detect(frame);
-                    
-                    // Create item list
-                    itemlist = new List<string>();
-
-                    // Add items to list
-                    for (int i = 0; i < items.Size(); i++)
-                    {
-                        TextBlock item = (TextBlock)items.ValueAt(i);
-                        itemlist.Add(item.Value);
-                    }
-
-                    // If no characters were found, print message 
-                    if (itemlist.Count == 0)
-                    {
-                        Toast.MakeText(this, "No characters found", ToastLength.Long).Show();
-                    }
-
-                    // Fill the listView with the items of itemlist
-                    listnames = FindViewById<ListView>(Resource.Id.listRecogTxt);
-                    ArrayAdapter<string> adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItemActivated1, itemlist);
-                    listnames.Adapter = adapter;
-                    listnames.ChoiceMode = ChoiceMode.Multiple;
-                    listnames.ItemClick += Listnames_ItemClick;
-                };
             }
         }
 
         private void Listnames_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
-            // If selecteditems is empty then add the selected item to selecteditems
-            // If the selected item is not in selecteditems than add it 
-            // If the selected item is already in selecteditems than remove it
             if (selecteditems.ToString().Length == 0)
             {
                 selecteditems.Add((string)listnames.GetItemAtPosition(e.Position));
@@ -201,7 +191,7 @@ namespace Scan2ClipBoard
             {
                 selecteditems.Add((string)listnames.GetItemAtPosition(e.Position));
             }
-            else
+            else if (selecteditems.Contains((string)listnames.GetItemAtPosition(e.Position)))
             {
                 selecteditems.Remove((string)listnames.GetItemAtPosition(e.Position));
             }
@@ -209,33 +199,45 @@ namespace Scan2ClipBoard
 
         private void CopySelected()
         {
-            search_string = new StringBuilder();
+            selecteditem_string = new StringBuilder();
 
-            for (int i = 0; i < selecteditems.Count; i++)
+            if (selecteditems.Count != 0)
             {
-                search_string.Append(selecteditems[i] + " ");
-            }
-            string search_string2 = search_string.ToString();
+                for (int i = 0; i < selecteditems.Count; i++)
+                {
+                    selecteditem_string.Append(selecteditems[i] + " ");
+                }
 
-            Copy2Clip(search_string2);         
+                Copy2Clip(selecteditem_string.ToString());
+            }
+            else
+            {
+                Toast.MakeText(this, "There is nothing to copy", ToastLength.Long).Show();
+            }        
         }
 
         private void CopyAll()
         {
-            search_string = new StringBuilder();
+            selecteditem_string = new StringBuilder();
 
-            for (int i = 0; i < itemlist.Count; i++)
+            if (selecteditems.Count != 0)
             {
-                search_string.Append(itemlist[i] + " ");
+                for (int i = 0; i < itemlist.Count; i++)
+                {
+                    selecteditem_string.Append(itemlist[i] + " ");
+                }
+            
+                Copy2Clip(selecteditem_string.ToString());
             }
-            string search_string2 = search_string.ToString();
-
-            Copy2Clip(search_string2);
+            else
+            {
+                Toast.MakeText(this, "There is nothing to copy", ToastLength.Long).Show();
+            }
         }
 
-        async void Copy2Clip(string search_string2)
+        async void Copy2Clip(string string_2_clipboard)
         {
-            await Clipboard.SetTextAsync(search_string2);
+            await Clipboard.SetTextAsync(string_2_clipboard);
             
             Toast.MakeText(this, "Copied to Clipboard", ToastLength.Long).Show();
             Finish();
