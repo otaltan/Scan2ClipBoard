@@ -16,6 +16,16 @@ If you like my app you can [buy me a coffee ☕](https://www.paypal.com/donate?h
 - Select from the list what you want to store to the clipboard
 - Quick settings tile for a faster access to the app
 
+## Compatibility & needed permissions
+
+Scan2ClipBoard requires at leat Android 9.
+
+Scan2ClipBoard needs the following permissions:
+- CAMERA -> To capture images
+- STORAGE -> To load an image from storage
+- INTERNET -> The Google Vision API does an initial library download the first time that it is used
+              (except this library is already downloaded). After that it should work offline.
+              
 ## Installation
 
 1. Download the apk file [here](https://github.com/otaltan/Scan2ClipBoard/releases). If you don't know how to install apps from unknown sources click [here](https://www.maketecheasier.com/install-apps-from-unknown-sources-android/). 
@@ -35,16 +45,6 @@ If you like my app you can [buy me a coffee ☕](https://www.paypal.com/donate?h
 Recognized characters shown in list | Selected list entries | Detected characters from a rotated image
 --- | --- | ---
 <img src="https://github.com/otaltan/Scan2ClipBoard/blob/master/Example%20Pictures/S2C_1.jpg?raw=true" width="300" height="621"/> | <img src="https://github.com/otaltan/Scan2ClipBoard/blob/master/Example%20Pictures/S2C_2.jpg?raw=true" width="300" height="621"/> | <img src="https://github.com/otaltan/Scan2ClipBoard/blob/master/Example%20Pictures/S2C_3.jpg?raw=true" width="300" height="621"/>
-
-## Compatibility & needed permissions
-
-Scan2ClipBoard requires at leat Android 9.
-
-Scan2ClipBoard needs the following permissions:
-- CAMERA -> To capture images
-- STORAGE -> To load an image from storage
-- INTERNET -> The Google Vision API does an initial library download the first time that it is used
-              (except this library is already downloaded). After that it should work offline.
 
 ## License
 
