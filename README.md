@@ -18,7 +18,7 @@ If you like my app you can [buy me a coffee ☕](https://www.paypal.com/donate?h
 
 ## Installation
 
-1. Download the apk file [here](https://github.com/otaltan/Scan2ClipBoard/releases).
+1. Download the apk file [here](https://github.com/otaltan/Scan2ClipBoard/releases). If you don't know how to install apps from unknown sources click [here](https://www.maketecheasier.com/install-apps-from-unknown-sources-android/). 
 2. Install it.
 3. Try it.
 4. Give me feedback.
