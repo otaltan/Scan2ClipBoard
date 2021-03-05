@@ -220,7 +220,7 @@ namespace Scan2ClipBoard
         {
             selecteditem_string = new StringBuilder();
 
-            if (selecteditems.Count != 0)
+            if (itemlist.Count != 0)
             {
                 for (int i = 0; i < itemlist.Count; i++)
                 {
