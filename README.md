@@ -1,4 +1,8 @@
-<meta name="google-site-verification" content="qu84tXVvtCNN7mkinQY_zaU0LDWl3lzOe4juMabfTSY" />
+<!--
+  Title: Scan2Clipboard
+  Description: Extract characters (letters, symbols, numbers, words, sentences), display them in a list and store what you want to your clipboard.
+  Author: otaltan
+  -->
 
 ## Scan2ClipBoard 
 
