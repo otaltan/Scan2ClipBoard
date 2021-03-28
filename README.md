@@ -1,5 +1,6 @@
 <meta name="google-site-verification" content="qu84tXVvtCNN7mkinQY_zaU0LDWl3lzOe4juMabfTSY" />
-# Scan2ClipBoard 
+
+## Scan2ClipBoard 
 
 Scan2ClipBoard is an android app which recognizes characters from an image and stores them to the clipboard. 
 It uses Google's Optical Character Recognition (OCR) to extract the characters
